@@ -1,15 +1,22 @@
 pipeline {
-    agent any
+    agent none
     stages {
-        stage('Checkout') {
+        stage('Back-end') {
+            agent {
+                docker { image 'maven:3.8.1-adoptopenjdk-11' }
+            }
             steps {
-                git branch: 'main', url: 'https://github.com/Payelsinharoy/my-first-pipeline.git'
+                sh 'mvn --version'
             }
         }
-        stage('Build') {
+        stage('Front-end') {
+            agent {
+                docker { image 'node:16-alpine' }
+            }
             steps {
-                echo 'Hello, Jenkins!'
+                sh 'node --version'
             }
         }
+        
     }
 }
